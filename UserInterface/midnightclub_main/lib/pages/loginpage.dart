@@ -5,7 +5,8 @@ import 'package:midnightclub_main/pages/signuppage.dart';
 import '../components/LoginTextField.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function()? onTap;
+  const LoginPage({super.key, required this.onTap});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -108,14 +109,15 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 50), //space
 
               //forgot password idk if this is const
-              const Padding(
+              Padding(
                 padding: EdgeInsetsDirectional.symmetric(horizontal: 25.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: Colors.blue),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: const Text("Forgot Password?",
+                          style: TextStyle(color: Colors.blue)),
                     ),
                   ],
                 ),

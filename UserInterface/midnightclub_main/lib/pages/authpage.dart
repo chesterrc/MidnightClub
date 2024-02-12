@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:midnightclub_main/pages/HomePage.dart';
-import 'package:midnightclub_main/pages/loginpage.dart';
+import 'package:midnightclub_main/pages/pagecontrollers/Login_or_forgotpassword.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -15,7 +15,7 @@ class AuthPage extends StatelessWidget {
           if (snapshot.hasData) {
             return HomePage();
           } else {
-            return LoginPage();
+            return LoginOrForgot();
           }
         },
       ),
