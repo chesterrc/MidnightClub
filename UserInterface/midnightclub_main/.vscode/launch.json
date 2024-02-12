@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "midnightclub_main",
+            "request": "launch",
+            "type": "dart",
+            "program": "C:/Users/livti/Desktop/Projects/MidnightClub/UserInterface/midnightclub_main/lib/main.dart"
+        },
+        {
+            "name": "midnightclub_main (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "midnightclub_main (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}
