@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/LoginTextField.dart';
+
+//database instance
+final FirebaseFirestore db = FirebaseFirestore.instance;
+CollectionReference users = db.collection('users');
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -48,10 +53,32 @@ class _SignUpPageState extends State<SignUpPage> {
     //sign up authentication
     try {
       if (passwordController.text == confirmPasswordcontroller.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
+              email: emailController.text,
+              password: passwordController.text,
+            )
+            .then((cred) => {
+                  //add new user to database
+                  if (cred.user != null)
+                    {
+                      users
+                          .doc(cred.user!.uid)
+                          .set({
+                            'email': emailController.text,
+                            'password': passwordController.text,
+                            'username': profileNameController.text,
+                            'attendance': 0,
+                            'mileage': 0,
+                            'reward': 0
+                          })
+                          .then((value) => print("User added"))
+                          .catchError(
+                              (error) => {print("Failed to add user: $error")})
+                    }
+                  else
+                    {throw Error()}
+                });
       } else {
         Navigator.pop(context);
         //alert about wrong confirmation password
@@ -106,6 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  //UI
   @override
   Widget build(BuildContext context) {
     return Scaffold(

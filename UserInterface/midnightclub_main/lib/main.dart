@@ -20,28 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-/*
-  @override
-  void initState() {
-    super.initState();
-    _configureAmplify();
-  }
-
-
-  Future<void> _configureAmplify() async {
-    try {
-      final auth = AmplifyAuthCognito();
-      await Amplify.addPlugin(auth);
-
-      // call Amplify.configure to use the initialized categories in your app
-      await Amplify.configure(amplifyconfig);
-
-      print('configuring amplify');
-    } on Exception catch (e) {
-      safePrint('An error occurred configuring Amplify: $e');
-    }
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
