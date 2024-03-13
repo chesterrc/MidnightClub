@@ -14,7 +14,7 @@ class RewardModel {
         'reward': int reward,
       } =>
         RewardModel(uid: uid, reward: reward),
-      _ => throw const FormatException('Failed to load album.'),
+      _ => throw const FormatException('Failed to load reward'),
     };
   }
 }

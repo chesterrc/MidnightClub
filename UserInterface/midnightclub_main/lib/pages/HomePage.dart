@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/reddit.dart';
 import '../models/users.dart';
 
 /*could place this into a class */
@@ -21,6 +22,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  //variables
+  late Future<Map<int, RedditModel>> RedditStream;
   //storing dict for jsonEncode
   Map<String, String> user_objs = {
     'uid': uid,
@@ -32,6 +35,29 @@ class _HomePage extends State<HomePage> {
   //grab data of current user
   final Stream<DocumentSnapshot<Map<String, dynamic>>> _userStream =
       db.collection('users').doc(uid).snapshots();
+
+  //grab reddit stream
+  Future<Map<int, RedditModel>> _getStreamReddit() async {
+    try {
+      final resp = await http.get(Uri.parse('http://localhost:8000/'));
+      if (resp.statusCode == 200) {
+        {
+          //map to store decoded json
+          Map<int, RedditModel> decoded_json = {};
+          //parse the JSON.
+          for (int i = 0; i < resp.body.length; i++) {
+            decoded_json[i] = RedditModel.fromJson(
+                jsonDecode(resp.body[i]) as Map<String, dynamic>);
+          }
+          return decoded_json;
+        }
+      } else {
+        throw Exception("couldn't get data");
+      }
+    } catch (e) {
+      throw (e);
+    }
+  }
 
   //update data of current user
   Future<RewardModel> postEntry() async {
@@ -76,6 +102,13 @@ class _HomePage extends State<HomePage> {
   //sign out function
   void signOut() {
     fba.signOut();
+  }
+
+  //add in reddit stream in initialzing app
+  @override
+  void initState() {
+    super.initState();
+    RedditStream = _getStreamReddit();
   }
 
   @override
